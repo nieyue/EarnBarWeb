@@ -194,8 +194,12 @@
 						
 						/*li.innerHTML = '<a href="javascript:window.parent.location.href=\'detail.html?acountId='+acticle.articleId+'\';"><img class=" mui-pull-left" src="'+img+'" width="100px" height="60px" style="padding-right: 10px;"><div ><font class="mui-ellipsis-2">' + title + '</font><div style="margin-top: '+top+'px;"><p  style="float: left;">¥ <font color="#FF0000">'+acticle.userUnitPrice+'</font></p><p  style="float: right;">阅读量：'+acticle.readingNumber+'</p></div></div></a>';*/
 						var html ;
-						if(imgList.length==1){
-							 img = imgList[0].imgAddress;
+						if(imgList.length<=1){
+							if(!imgList[0]){
+							img = '';
+							}else{
+							 img = imgList[0].imgAddress||'';		
+							}
 							 html = '<a href="javascript:;" style="padding-bottom: 8px;"><img class=" mui-pull-left" src="'+img+'" width="100px" height="60px" style="padding-right: 8px;"><div ><font class="mui-ellipsis-2">' + title + '</font><div style="margin-top: '+top+'px;"><p  style="float: left;">¥ <font color="#FF0000">'+acticle.userUnitPrice+'</font></p><p  style="float: right;">阅读量：'+acticle.readingNumber+'</p></div></div></a>';
 						}else if(imgList.length==2){
 							html = '<a href="javascript:;" style="padding-bottom: 5px;"><div ><font class="mui-ellipsis-2">' + title + '</font><div style="width: 100%;height: auto;margin-top: 3px;"><img  src="'+imgList[0].imgAddress+'" width="46%" height="80px" style="float: left;"><img  src="'+imgList[1].imgAddress+'" width="53%" height="80px" style="padding-left: 10px;float: left;"></div><div style="width: 100%;"><p  style="float: left;margin-top: 10px;margin-left: 0px;">¥<font color="#FF0000">'+acticle.userUnitPrice+'</font></p><p  style="float: right;margin-top: 10px;">阅读量：'+acticle.readingNumber+'</p></div></div></a>';

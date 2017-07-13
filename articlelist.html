@@ -150,7 +150,7 @@
 						for (var i = 0; i < typelist.length; i++) {
 							var title = typelist[i];
 							var p = /[0-9a-zA-Z]/i;
-							if(title!="精选/推荐"&&title!="广告"&&!p.test(title)){
+							//if(title!="精选/推荐"&&title!="广告"&&!p.test(title)){
 								var li = document.createElement('a');
 								li.id = i;
 								li.className = 'mui-control-item';
@@ -158,7 +158,7 @@
 								li.textContent = title;
 								table.appendChild(li); 
 
-							}
+							//}
 						
 						
 						 

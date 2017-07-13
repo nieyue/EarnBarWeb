@@ -89,6 +89,7 @@
 			document.getElementById("tuditext").textContent =partnerProfit.toFixed(2)+"元";
 			document.getElementById("wenzhangtext").textContent = wenzhangnum.toFixed(2)+"元";
 			
+			getwenzhanglist(page);//初始化
 			mui.plusReady(function(){
 				showloding();
 				getwenzhanglist(page);
