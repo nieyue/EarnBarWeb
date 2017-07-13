@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/infoediting.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
+		<script type="text/javascript" src="js/spin.min.js" ></script>
+		<script type="text/javascript" src="js/home.js" ></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #b033b1;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"><font color="#FFFFFF">信息编辑</font></h1>
+			
+		</header>
+		
+		<div style="width: 100%;height: auto;margin-top: 50px;">
+			<div style="background: #FFFFFF;height: 50px;line-height: 50px;margin-top: 50px;">
+
+			<div class="mui-input-row">
+			    
+			    <input id="weixinnum" style="border: 0px;" type="text" class="mui-input-clear" placeholder="请输入需要提现微信号">
+			</div>
+			
+			</div>
+			
+			<div class="inputdiv">
+
+			<div class="mui-input-row">
+			    
+			    <input id="phonenum" style="border: 0px;" type="text" class="mui-input-clear" placeholder="请输入与微信账号绑定的手机号">
+			</div>
+			
+			</div>
+			
+			<div class="inputdiv">
+
+			<div class="mui-input-row">
+			    
+			    <input id="alipay" style="border: 0px;" type="text" class="mui-input-clear" placeholder="请输入支付宝账号">
+			</div>
+			
+			</div>
+			
+			<div class="inputdiv">
+
+			<div class="mui-input-row">
+			    
+			    <input id="realname" style="border: 0px;" type="text" class="mui-input-clear" placeholder="请输入支付宝真实姓名">
+			</div>
+			
+			</div>
+
+			<p style="margin-top: 10px;margin-left: 10px;color: #FF0000;margin-right: 10px;">为了资金转账安全，请填写正确资料，用户只有在第一次提现填写，如需修改，请及时联系客服！</p>
+		</div>
+		
+		<button onclick="postuser()" style="margin-top: 30px;width: 80%;margin-left: 40px;background-color:#b033b1;color:#fff;" type="button" class="mui-btn  mui-btn-block">提交并保存</button>
+		<div id="lodingdiv" class="centerdiv" style="text-align: center;display: none;">
+    	</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			var user = JSON.parse(localStorage.getItem("user"));
+			console.log(JSON.stringify(user));
+			
+			
+			
+			function postuser(){
+				var weixinnum = document.getElementById("weixinnum").value;
+				var phonenum = document.getElementById("phonenum").value;
+				var username = document.getElementById("realname").value;
+				var myalipay = document.getElementById("alipay").value;
+				if(weixinnum!=""&&phonenum!=""&&username!=""&&myalipay!=""){
+					user.wechat = weixinnum;
+					user.phone = phonenum;
+					user.realname = username;
+					user.alipay = myalipay;
+					showloding("正在提交信息");
+					postusers();
+				}else{
+					
+					mui.toast("请把信息填写完整");
+				}
+			}
+			
+			function postusers(){
+				var host = localStorage.getItem("hostUrl");
+				
+				var mastid = user.masterId;
+				if(mastid==null){
+					user.masterId = 0;
+				}
+				console.log("提交信息"+JSON.stringify(user));
+				//return;
+				mui.ajax(host+'/acount/updatePhone',{
+				data:user,
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				//headers:{'Content-Type':'application/json'},	 
+				xhrFields: {withCredentials: true},	              
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(data.code);
+					console.log(data.msg);
+					if(data.code==200){
+						localStorage.setItem("user",JSON.stringify(user));
+						mui.toast("设置成功！");
+						mui.back();
+					}else{
+						mui.toast("设置失败！请重新提交！");
+					}
+					
+					closeloding();
+					
+					
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+					closeloding();
+					mui.toast("数据请求失败，请检查网络！！！");
+				}
+			});
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,308 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/exchange.css" rel="stylesheet"></link>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/jquery-1.8.1.min.js" ></script>
+		<script type="text/javascript" src="js/spin.min.js" ></script>
+		<script type="text/javascript" src="js/home.js" ></script>
+	</head>
+
+	<body>
+		
+		
+		 
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" >
+		 
+		  <div class="mui-scroll" >
+		    <!--数据列表-->
+		    
+		    <div style="height: 70px; background: #FFFFFF;">
+		    	<div style="float: left;">
+		    	<li class="exchangeli1">我的余额：<font color="#FF0000" id="myyue">¥0</font></li>
+		    	<li class="exchangeli1">已提现：<font color="#FF0000" id="cashyue">¥0</font></li>
+		    	</div>
+		    	<div style="float: right;margin-right: 20px;margin-top: 15px;">
+		    		<div class="btndiv" id="getmoneybtn"><font size="2" style="line-height: 40px;" color="#FFFFFF">马上提现</font></div>
+		    	</div>
+		    </div>
+		    <!--<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="margin-top: 3px;background: #FFFFFF;">
+		        <div class="mui-scroll" style="width: 100%;">
+		            <a class="mui-control-item mui-active" style="width: 30%;text-align: center;">
+		                全部
+		            </a>
+		            <a class="mui-control-item" style="width: 33.3%;text-align: center;">
+		              待审核
+		            </a>
+		            <a class="mui-control-item" style="width: 33.3%;text-align: center;">
+		               已提现
+		            </a>
+		        </div>
+		        
+		    </div>-->
+		    
+		    <div class="exchangediv">
+		    	
+		    	<li class="exchangeli" > <font color="#FFFFFF" size="2">提现金额</font></li>
+		    	<li class="exchangeli" > <font color="#FFFFFF" size="2">申请时间</font></li>
+		    	<li class="exchangeli" > <font color="#FFFFFF" size="2">审核状态</font></li>
+		    </div>
+		    
+		    <ul id="tixianlist" class="mui-table-view" style="height: auto;list-style:none;margin:0;padding:0;background: #FFFFFF;">
+
+				<!--<div class="itemdiv">
+					<li class="itemli">100元</li>
+					<li class="itemli">2017-05-17</li>
+					<li class="itemli" style="color: #EC971F;font-size: 14px;">支付宝支付完成</li>
+				</div>-->
+				
+			</ul>
+		    
+		  </div>
+		  <div id="lodingdiv" class="centerdiv" style="text-align: center;display: none;">
+    		</div>
+		</div>
+		
+		<!--<div style="height: 60px;width: 100%;position: absolute;bottom: 0;background: #FFFFFF;"></div>
+		</div>-->
+		
+		
+		
+		<script type="text/javascript">
+			mui.init({
+				pullRefresh: {
+					container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						contentdown : "下拉刷新",
+						contentover : "释放刷新",
+						contentrefresh : "正在刷新...",
+						callback: pullfreshfunction
+					},
+					up:{    
+			            contentrefresh:'正在加载...',
+			            contentnomore:"没有更多数据了",
+			            callback:pullupRefresh
+        			}
+			
+
+				}
+			});
+			
+			mui.plusReady(function(){
+				showloding();
+				getlist(page);
+			});
+			
+			
+			var yue = localStorage.getItem("yue");
+			var page = 1;
+			var user = JSON.parse(localStorage.getItem("user"));
+			var acountid = localStorage.getItem("acountId");
+			var host = localStorage.getItem("hostUrl");
+			var financeIds = localStorage.getItem("financeId");
+			var cashyue = document.getElementById("cashyue");
+			var tixiannum = localStorage.getItem("tixiannum");
+			var financeDetails ;
+			var moneys;
+			var hethistory="";
+			if(yue==null||yue==""){
+				yue=0;
+			}
+				document.getElementById("myyue").textContent = "¥ "+yue;
+			if(tixiannum==null||tixiannum==""){
+				tixiannum=0;
+			}
+				cashyue.textContent = "¥ "+tixiannum;
+			document.getElementById("getmoneybtn").addEventListener("tap",function(){
+				tishi();
+			});
+			
+			function tishi(){
+				mui.confirm("请先确认是否关注了“赚吧用户中心”微信公众号，否则无法提现！！！","温馨提示",['取消','已关注'],function(e){
+					if(e.index==1){
+						getmoney();
+					}
+				},"div");
+			}
+			
+			function getmoney(){
+				console.log("点击提现");
+				console.log(user.wechat);
+				
+				if(user.wechat==null||user.wechat==""||user.alipay==null||user.alipay==""||user.realname==null){
+					mui.toast("您的提现信息还不完整哦！快去填写吧");
+					mui.openWindow({
+					url:"infoediting.html",
+					id:"infoediting",
+						
+					waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+				      
+				    }
+				});
+				}else{
+					
+					if(yue<10){
+					mui.toast("提现金额不够哦，快去赚钱吧");
+					
+					}else{
+						mui.prompt('','请输入提现金额','请输入提现金额',['取消','确定'],function (e){
+										if(e.index == 1){
+											console.log(e.value);
+											
+											 moneys = parseInt(e.value);
+											if(moneys<=yue){
+												
+												if(hethistory=="审核中"){
+													mui.toast("有申请正在审核哦，暂时不能再次申请提现");
+												}else{
+													showloding("正在提交申请");
+													
+													cashmoney();
+												}
+												
+											}else if(moneys<10){
+													mui.toast("提现金额不能小与10元哦！！！");
+												}else{
+												mui.toast("提现金额不能大于余额哦！！！");
+											}
+											
+											
+										}
+			},'div');
+			
+			document.querySelector('.mui-popup-input input').type='number';
+					}
+				}
+			}
+			
+			
+			
+			function pullfreshfunction() {
+				setTimeout(function ()  {  
+					document.getElementById("tixianlist").innerHTML = "";
+					page = 1;
+					getlist(page);
+					                                    
+					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();  //refresh completed  
+					               },  1500);
+
+			}
+			
+			function pullupRefresh() {
+				setTimeout(function ()  { 
+					
+					getlist(page);                     
+					mui('#refreshContainer').pullRefresh().endPullupToRefresh();  //refresh completed  
+					               },  1500);
+
+			}
+			
+			
+			
+			
+			
+			function cashmoney(){
+				mui.ajax(host+'/financeDetails/add',{
+				data:{
+					financeId:financeIds,
+					type:0,
+					money:moneys,
+					status:"审核中"
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+//				headers:{'Content-Type':'application/json'},	
+				xhrFields: {withCredentials: true},	               
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(data.code);
+					console.log(data.msg);
+					if(data.code==200){
+						closeloding();
+						mui.back();
+						mui.toast("提现申请成功！！！");
+					}else{
+						mui.toast("提现申请失败，请重新申请！");
+					}
+					
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+					closeloding();
+					mui.toast("数据请求失败，请检查网络！！！");
+				}
+			});
+			}
+			
+			
+			
+		  function	getlist(pagenum){
+		  	console.log(acountid);
+			mui.ajax(host+'/financeDetails/list',{
+				data:{
+					financeId:financeIds,
+					pageNum:(pagenum-1)*10+1,
+					pageSize:10
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+//				headers:{'Content-Type':'application/json'},	
+				xhrFields: {withCredentials: true},	               
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(data.code);
+					console.log(data.msg);
+					var results = data.list;
+					console.log(JSON.stringify(results));
+					
+					if(data.code==200){
+						var table = document.body.querySelector('.mui-table-view');
+
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					hethistory = results[0].status;
+					for (var i = 0; i < results.length; i++) {
+					
+					var li = document.createElement('div');
+					li.id = i;
+					li.className = 'itemdiv';
+					
+					var time = results[i].updateDate.substring(0,10);
+					var color;
+					if(results[i].status=="审核中"){
+						color = "#CF2D28";
+					}else{
+						color = "#EC971F";
+					}
+					li.innerHTML = '<div class="itemdiv"><li class="itemli">'+results[i].money+'元</li><li class="itemli">'+time+'</li><li class="itemli" style="color: '+color+';font-size: 14px;">'+results[i].status+'</li></div>';
+					
+					table.appendChild(li);  
+					}
+					
+					page++;    
+					}else if(data.code==40000){
+						mui.toast("暂无更多提现记录");
+					}
+					closeloding();
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+					closeloding();
+					mui.toast("数据请求失败，请检查网络！！！");
+				}
+			});
+		  }
+		</script>
+	</body>
+
+</html>

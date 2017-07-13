@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/detail.css" rel="stylesheet" />
+		<!--<script type="text/javascript" src="js/jquery-1.8.1.min.js" ></script>
+		<script type="text/javascript" src="js/jquery.qrcode.min.js" ></script>-->
+	</head>
+
+	<body>
+		<!-- <header class="mui-bar mui-bar-nav" style="background: #EC971F;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"><font color="#FFFFFF">我的名片</font></h1>
+		</header> -->
+		
+		<div class="mui-scroll-wrapper" style="margin-top: 0px;height: auto;background: #FFFFFF;">
+		    <div class="" >
+		         <div style="position:absolute;top:0;left:0;width: 100%;height: 100%;background-image: url(img/namecard.png);background-size: 100% 100%;text-align: center;"  />
+		        <img style="width: 50%;height: 28%;position:fixed;left:25%;bottom:27% " id="usererweima"/>
+		        </div> 
+
+
+
+		        <!-- <div style="width: 100%;">
+		        	<li style="list-style-type: none;margin-left: 25px;margin-top: 20px;margin-right: 20px;">
+		        		<p>1、您的好友通过您<font color="#FF0000">分享的名片，登录并下载成为转赚成员</font>,对方即成为您的合伙人，您将获得合伙人分享文章获得收益的分成。</p>
+		        	</li>
+		        	<li style="list-style-type: none;margin-left: 25px;margin-top: 20px;margin-right: 20px;">
+		        		<p>2、<font color="#FF0000">合伙人越多，自己的收益也越多哦!</font>,而且我们还会不定期的活动，合伙人越多，奖励越大！赶紧去邀请合伙人吧！！！</p>
+		        	</li>
+		        	
+		        </div> -->
+		        
+		        
+		    </div>
+		    
+		    
+		    <!-- <div class="detaildiv">
+		    				<div style="line-height: 70px;margin-top: 8px;">
+		    					<button onclick="shareHref()" type="button" class="mui-btn mui-btn-yellow mui-btn-block" style="width:90%; margin-left: 20px;">分享名片</button>
+		    				</div>
+		    			</div> -->
+		</div>
+		
+		
+		
+		
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			var shares = null;
+			var acountid = localStorage.getItem("acountId")||1000;
+			mui.plusReady(function(){
+				updateSerivces();
+				
+			});
+			var host = localStorage.getItem("hostUrl");
+			document.getElementById("usererweima").src 
+			= host+"/getBarcode?acountId="+acountid;
+			//= host+"/getBarcode?acountId="+1000;
+			/**
+				 * 更新分享服务
+				 */
+				function updateSerivces() {
+					plus.share.getServices(function(s) {
+						shares = {};
+						for(var i in s) {
+							var t = s[i];
+							shares[t.id] = t;
+						}
+						outSet("获取分享服务列表成功");
+					}, function(e) {
+						outSet("获取分享服务列表失败：" + e.message);
+					});
+				}
+				/**
+				 * 分享操作
+				 */
+				function shareAction(id, ex) {
+					var s = null;
+					if(!id || !(s = shares[id])) {
+						outLine("无效的分享服务！");
+						return;
+					}
+					if(s.authenticated) {
+						outSet("---已授权---");
+						shareMessage(s, ex);
+						
+					} else {
+						outSet("---未授权---");
+						s.authorize(function() {
+							shareMessage(s, ex);
+						}, function(e) {
+							outLine("认证授权失败");
+						});
+					}
+				}
+				/**
+				 * 发送分享消息
+				 */
+				function shareMessage(s, ex) {
+					
+					var name = localStorage.getItem("username");
+					var msg = {
+						content: '分享-详情',
+						href:  localStorage.getItem("hostUrl")+"/share.html?acountId="+acountid,
+						title: "转赚邀请函",
+						content: name+"邀请您成为他的合伙人，来一起赚钱吧！",
+						thumbs: ['img/icona.png'],
+						pictures: ['img/icona.png'],
+						extra: {
+							scene: ex
+						}
+					};
+					s.send(msg, function() {
+						outLine("分享成功!");
+					}, function(e) {
+						outLine("分享失败!");
+					});
+				}
+				/**
+				 * 分享按钮点击事件
+				 */
+				function shareHref() {
+					
+					var ids = [{
+							id: "weixin",
+							ex: "WXSceneSession" /*微信好友*/
+						}, {
+							id: "weixin",
+							ex: "WXSceneTimeline" /*微信朋友圈*/
+						}],
+						bts = [{
+							title: "发送给微信好友"
+						}, {
+							title: "分享到微信朋友圈"
+						}];
+					plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: bts
+						},
+						function(e) {
+							var i = e.index;
+							if(i > 0) {
+								shareAction(ids[i - 1].id, ids[i - 1].ex);
+							}
+						}
+					);
+				}
+				// 控制台输出日志
+				function outSet(msg) {
+					console.log(msg);
+				}
+				// 界面弹出吐司提示
+				function outLine(msg) {
+					mui.toast(msg);
+				}
+		</script>
+	</body>
+
+</html>

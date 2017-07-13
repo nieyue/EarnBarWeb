@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script type="text/javascript" src="js/jquery-1.8.1.min.js" ></script>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/article.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #b033b1;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+			<h1 class="mui-title"><font color="#FFFFFF">文章</font></h1>
+		</header>
+
+		<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control  mui-segmented-control-inverted" style=" margin-top: 45px;background: #FFFFFF;height: 40px;width: 100%;">
+			<div class="mui-scroll" >
+				<a id="tuijian" class="mui-control-item mui-active">
+					精选/推荐
+				</a>
+				<!--<a id="shenghuo" class="mui-control-item ">
+					生活
+				</a>
+				<a id="quwen" class="mui-control-item">
+					趣闻
+				</a>
+				<a id="liangxing" class="mui-control-item">
+					两性
+				</a>
+				<a id="youxi" class="mui-control-item">
+					游戏
+				</a>
+				<a id="xiaoshuo" class="mui-control-item">
+					小说
+				</a>
+				
+				<a id="meizhuang" class="mui-control-item">
+					美妆
+				</a>
+				<a id="wenxue" class="mui-control-item">
+					文学
+				</a>
+				<a id="chuangye" class="mui-control-item">
+					创业
+				</a>-->
+			</div>
+		</div>
+
+		<div class="mui-content" ></div>
+
+		
+		<script type="text/javascript">
+			function back(){
+			//history.go(-1)
+			location.href="index.html"
+			}
+			mui.init({
+				
+				
+				subpages: [{
+					url: 'articlecontent.html',
+					id: 'articlecontent',
+					styles: {
+						top: '89px',
+						bottom: '0px',
+					},
+					extras:{
+						choses:"精选/推荐"
+					}
+					
+				
+				}]
+				
+				
+			});
+			var host = localStorage.getItem("hostUrl");
+			sessionStorage.setItem("articleType","精选/推荐");//默认点击的第一个
+			gettitle();
+			mui.plusReady(function(){
+				gettitle();
+			});
+			
+			var options = {
+				 scrollY: false, //是否竖向滚动
+				 scrollX: true, //是否横向滚动
+				 startX: 0, //初始化时滚动至x
+				 startY: 0, //初始化时滚动至y
+				 indicators: true, //是否显示滚动条
+				 deceleration:0.0003, //阻尼系数,系数越小滑动越灵敏
+				 bounce: true //是否启用回弹
+			};
+			
+			
+			mui('.mui-scroll-wrapper').scroll(options).refresh(true);
+			
+			var clikid=null;
+			mui(".mui-scroll").on('tap','.mui-control-item',function(){
+			  //获取id
+			  var value = document.getElementById(this.getAttribute("id")).textContent.trim();
+			  //传值给详情页面，通知加载新数据
+			 console.log("点击"+value);
+			 if(clikid!=value){
+			 	var mainPage = null;
+		        if(!mainPage){
+		      //      mainPage = plus.webview.getWebviewById('A.html');
+		      //      mainPage = plus.webview.getWebviewById("articlecontent");
+				sessionStorage.setItem("articleType",value);//点击的类型			
+			document.getElementById('articlecontent').setAttribute("src",document.getElementById('articlecontent').getAttribute("src")+"?d="+new Date());
+		        }
+				mui.fire(mainPage,"choseClick",{
+		            "chose":value
+        		});
+        		clikid=value;
+			 }
+			 
+        		
+//      		
+			})
+			
+			
+			function gettitle(){
+				console.log("gettitle")
+				mui.ajax(host+'/article/type',{
+				data:{
+					
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+//				headers:{'Content-Type':'application/json'},
+				xhrFields: {withCredentials: true},	              
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+//					console.log(data.code);
+//					console.log(data.msg);
+					if(data.code==200){
+						var typelist = data.list;
+						
+						var table = document.body.querySelector('.mui-scroll');
+	
+						
+						
+						console.log(JSON.stringify(typelist));
+						
+						
+						for (var i = 0; i < typelist.length; i++) {
+							var title = typelist[i];
+							var p = /[0-9a-zA-Z]/i;
+							if(title!="精选/推荐"&&title!="广告"&&!p.test(title)){
+								var li = document.createElement('a');
+								li.id = i;
+								li.className = 'mui-control-item';
+								li.id = "type"+i;
+								li.textContent = title;
+								table.appendChild(li); 
+
+							}
+						
+						
+						 
+					}
+				}else{
+						mui.toast("数据请求失败");
+					}
+					
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+					mui.toast("数据请求失败");
+				}
+			});
+			}
+		</script>
+	</body>
+
+</html>

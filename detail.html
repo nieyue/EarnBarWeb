@@ -1,0 +1,370 @@
+<!doctype html>
+<html>
+
+	<head>
+		<!--<meta charset="UTF-8">-->
+		<meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/detail.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
+		<script type="text/javascript" src="js/spin.js" ></script>
+		<script type="text/javascript" src="js/home.js" ></script>
+	</head>
+
+	<body style="height: 100%;;display:none;">
+
+		<header class="mui-bar mui-bar-nav" style="background:#b033b1;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+			<h1 class="mui-title"><font color="#FFFFFF" id="detaititle">文章详情</font></h1>
+		</header>
+		
+		<div style="width: 100%;background: #FFFFFF;height: 100%;">
+			<iframe id="ifcontent"  style="padding-top: 40px;width:100%;height: 100%;display: none;"></iframe>
+			<div id="detailcontent" style="padding-top: 60px;width:100%;">
+				<div style="margin-top: 20px;width:300px;margin:0 auto;line-height: 30px;">
+				<font size="5" color="#000000">
+					<strong id="detailtitle" style="line-height: 10px;"> </strong>
+				</font>
+				<div style="width: 100%;margin-top: 10px;">
+					<p id="detailtime" style="list-style-type: none;float: left;font-size: 16px;"></p>
+					<p id="readnumber" style="list-style-type: none;float: right;font-size: 16px;"></p>
+				</div>
+				
+				</div>
+				
+				
+				<div  id="content" style="width: auto;margin-top: 50px;margin-bottom: 70px;">
+					
+				</div>
+			</div>
+
+			<div class="detaildiv">
+				<div style="line-height: 70px;margin-top: 8px;">
+					<button onclick="shareHref()" type="button" class="mui-btn mui-btn-block" style="width:90%; margin-left: 20px;background-color:#b033b1;color:#fff;">立即分享</button>
+				</div>
+			</div>
+		<div id="lodingdiv" class="centerdiv" style="text-align: center;">
+    	</div>
+			<script src="js/mui.min.js"></script>
+			<script type="text/javascript">
+ 					function back(){
+			//history.go(-1)
+			location.href="article.html"
+			}
+				mui.init({
+
+				});
+				
+				var Intent = null,
+					File = null,
+					Uri = null,
+					main = null;
+				var shares = null;
+				var shareImageUrl = '',acticletitle,acticleurl;
+				 var articleid;
+				 var host = localStorage.getItem("hostUrl");
+				var width = document.documentElement.clientWidth || document.body.clientWidth;
+				document.getElementById("content").style.width = width;
+				mui.plusReady(function() {
+					var  wv  =  plus.webview.currentWebview(); 
+					
+					                
+					articleid  =  wv.myid; //这样就能接收到上个页面传过来的值了
+					getacticlecontent(articleid);                
+					console.log("id======" + articleid);
+					
+					updateSerivces();
+					if(plus.os.name == "Android") {
+						Intent = plus.android.importClass("android.content.Intent");
+						File = plus.android.importClass("java.io.File");
+						Uri = plus.android.importClass("android.net.Uri");
+						main = plus.android.runtimeMainActivity();
+					}
+					
+					showloding();
+				});
+			/**
+			 * 获取当前url的参数
+			 * 
+			 */
+			function GetQueryString(name)
+			{
+			     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			     var r = window.location.search.substr(1).match(reg);
+			     if(r!=null)return  decodeURIComponent(r[2]); return null;
+			     //if(r!=null)return  unescape(r[2]); return null;
+			}
+				getacticlecontent(GetQueryString("acountId")); //初始化
+				
+				/**
+				 * 更新分享服务
+				 */
+				function updateSerivces() {
+					plus.share.getServices(function(s) {
+						shares = {};
+						for(var i in s) {
+							var t = s[i];
+							shares[t.id] = t;
+						}
+						outSet("获取分享服务列表成功");
+					}, function(e) {
+						outSet("获取分享服务列表失败：" + e.message);
+					});
+				}
+				/**
+				 * 分享操作
+				 */
+				function shareAction(id, ex) {
+					var s = null;
+					if(!id || !(s = shares[id])) {
+						outLine("无效的分享服务！");
+						return;
+					}
+					if(s.authenticated) {
+						outSet("---已授权---");
+						shareMessage(s, ex);
+						
+					} else {
+						outSet("---未授权---");
+						s.authorize(function() {
+							shareMessage(s, ex);
+						}, function(e) {
+							outLine("认证授权失败");
+						});
+					}
+				}
+				/**
+				 * 发送分享消息
+				 */
+				function shareMessage(s, ex) {
+					console.log(s+"......."+ex+"......."+acticleurl);
+					var msg = {
+						content: '分享-详情',
+						href: acticleurl,
+						title: acticletitle,
+						content: acticletitle,
+						thumbs: [shareImageUrl],
+						pictures: [shareImageUrl],
+						extra: {
+							scene: ex
+						}
+					};
+					s.send(msg, function() {
+						outLine("分享成功!");
+					}, function(e) {
+						outLine("分享失败!");
+					});
+				}
+				/**
+				 * 分享按钮点击事件
+				 * 
+					*		id: "weixin",
+					*		ex: "WXSceneSession" //微信好友				
+				 */
+				function shareHref() {
+					var headimg = localStorage.getItem("headimg");
+					var username = localStorage.getItem("username");
+					if(headimg==null||username==null){
+						mui.openWindow({
+						url:"login.html",
+						id:"login",
+						
+						});
+					}else{
+						var ids = [{
+								id: "weixin",
+								ex: "WXSceneTimeline" /*微信朋友圈*/
+							}],
+							bts = [{
+								title: "分享到微信朋友圈"
+							}];
+						plus.nativeUI.actionSheet({
+								cancel: "取消",
+								buttons: bts
+							},
+							function(e) {
+								var i = e.index;
+								if(i > 0) {
+									shareAction(ids[i - 1].id, ids[i - 1].ex);
+								}
+							}
+						);
+						}
+				}
+				// 控制台输出日志
+				function outSet(msg) {
+					console.log(msg);
+				}
+				// 界面弹出吐司提示
+				function outLine(msg) {
+					mui.toast(msg);
+				}
+	
+				
+				function getacticlecontent(articleId){
+					console.log(host+'/article/'+articleId);
+					mui.ajax(host+'/article/'+articleId,{
+						
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						//headers:{'Content-Type':'application/json'},	
+				xhrFields: {withCredentials: true},	             
+						success:function(data){
+							//服务器返回响应，根据响应结果，分析是否登录成功；
+							//console.log(data.code);
+							//console.log(data.msg);
+							var title;
+							//console.log(JSON.stringify( data.list[1]));
+							var result = data.list[0];
+							//console.log(JSON.stringify(result));
+							document.getElementById("detailtitle").textContent = result.title;
+							document.getElementById("detailtime").textContent = result.createDate.substring(0,10);
+							document.getElementById("readnumber").textContent = "阅读量："+ result.readingNumber;
+							acticletitle = result.title;
+							title = acticletitle;
+							
+							if(title.length>16){
+								title = title.substring(0,15)+"...";
+							}
+							document.getElementById("detaititle").textContent = title;
+							var result2 = data.list[1];
+							var trueurl;
+								trueurl = result2.ssurl;
+							location.replace(trueurl+"&acountId="+localStorage.getItem("acountId"));
+							return;
+							acticleurl = trueurl+"&acountId="+localStorage.getItem("acountId");
+							console.log(acticleurl);
+							if(result.redirectUrl!=null&&result.redirectUrl!=""&&result.content==null&&result.content==""){
+								var ifcontent = document.getElementById("ifcontent");
+								ifcontent.style.display = "";
+								document.getElementById("detailcontent").style.display = "none";
+								ifcontent.src = result.redirectUrl;
+								closeloding();
+								return;
+							}
+							var imgs = result.imgList;
+							if(imgs.length>0){
+								shareImageUrl =imgs[0].imgAddress;
+							}else{
+								shareImageUrl = "img/icona.png"
+							}
+							
+							var html = result.content;
+							var noscript =  html.replace(/<script.*?>.*?<\/script>/ig, '');
+							var doms = $.parseHTML( noscript , true);
+							$("#content").append(doms);
+							var pinwidth = window.screen.width;
+							var contents = document.getElementById("content");
+							var imgs =  contents.getElementsByTagName("img");
+							console.log("屏幕宽度"+pinwidth);
+							for(var i=0;i<imgs.length;i++){
+								var imgwidth = imgs[i].naturalWidth;
+								
+								console.log("图片宽度"+imgwidth);
+								if(imgwidth>pinwidth||imgwidth==0){
+									imgs[i].style.width = "100%";
+									imgs[i].style.paddingLeft = "3px";
+									imgs[i].style.paddingRight = "3px";
+								}
+								
+							}
+							var ps = contents.getElementsByTagName("p");
+							for(var i=0;i<ps.length;i++){
+								ps[i].style.width = "100%";
+								ps[i].style.paddingLeft = "20px";
+								ps[i].style.paddingRight = "20px";
+							}
+							var videos = contents.getElementsByTagName("iframe");
+							
+							if(videos.length!=0){
+								for(var i=0;i<videos.length;i++){
+									videos[i].width = "100%";
+									videos[i].height = "200px"
+									videos[i].style.paddingLeft = "5px";
+									videos[i].style.paddingRight = "5px";
+								}
+							}
+							
+							closeloding();
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+							closeloding();
+							mui.toast("数据请求失败，请检查网络！！！");
+						}
+			});
+	}
+				
+				
+				
+				
+				
+				function haveqq(){
+					var main = plus.android.runtimeMainActivity();
+				    var packageManager = main.getPackageManager();
+				    var PackageManager = plus.android.importClass(packageManager);
+				    var packages = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
+				
+				    var len = plus.android.invoke(packages,'size');
+				    var have;
+				    for(var i=0;i<len;i++){
+				        // 安装包信息
+				        var packageInfo = plus.android.invoke(packages,'get',i);
+				        var applicationInfo = plus.android.getAttribute(packageInfo,"applicationInfo");
+				        // 应用名称
+		//		        var appName = plus.android.invoke(applicationInfo,"loadLabel",packageManager)
+				        // 包名
+				        var packageName = plus.android.getAttribute(packageInfo,"packageName");
+		//		        // 版本号
+		//		        var versionCode = plus.android.getAttribute(packageInfo,"versionCode");
+		//		        // 图标
+		//		        var appIcon = plus.android.invoke(applicationInfo,"loadIcon",packageManager);
+						if(packageName=="com.tencent.mtt"){
+							
+							return true;
+						}
+				        console.log("packageName:"+packageName+";  ");
+		    			
+				    }
+		    
+		}
+		
+		function goqqbrowser() {  
+			console.log(acticleurl);
+                   if (plus.os.name == "iOS") {  
+                       plus.runtime.launchApplication({  
+                           action: "mttbrowser://url="+acticleurl  
+                       }, function(e) {  
+                           plus.nativeUI.confirm("检查到您未安装qq，请先到appstore搜索下载!", function(i) {  
+                               if (i.index == 0) {  
+                                   iosAppstore("itunes.apple.com/cn/app/mtt/");  
+                               }  
+                           });  
+                       });  
+                   }else if(plus.os.name == "Android"){
+						var main = plus.android.runtimeMainActivity(); 
+						var packageManager = main.getPackageManager();
+	            		var PackageManager = plus.android.importClass(packageManager);
+			            var Intent = plus.android.importClass('android.content.Intent'); 
+			            var Uri = plus.android.importClass('android.net.Uri');
+					if(haveqq()){
+						 
+			            var intent = new Intent(Intent.ACTION_VIEW, Uri.parse(acticleurl)); 
+			            intent.setClassName("com.tencent.mtt", "com.tencent.mtt.MainActivity");
+					
+					}else{
+						var intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://mktll.qq.com/qbrowser/index_10017329.html")); 
+//			            intent.setClassName("com.tencent.mtt", "com.tencent.mtt.MainActivity");
+						mui.toast('请先安装QQ浏览器');
+					}
+					main.startActivity(intent);
+}  
+               }
+			</script>
+	</body>
+
+</html>

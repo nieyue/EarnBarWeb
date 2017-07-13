@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		
+	</head>
+
+	<body>
+		
+		
+		<header class="mui-bar mui-bar-nav" style="background: #b033b1;">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+		    <h1 class="mui-title"><font color="#FFFFFF">个人中心</font></h1>
+		</header>
+		
+		<ul class="mui-table-view" style="margin-top: 45px;">
+		        <li class="mui-table-view-cell">
+		            <img id="userhead" src="img/timg1.jpg" style="width: 40px;height: 40px;float: left;border-radius: 5px;" />
+		            <a id="username" style="float: right;line-height: 40px;background: #FFFFFF;">william</a>
+		        </li>
+		        <li class="mui-table-view-cell" style="background: #FFFFFF;">
+		            <a  style="float: left;line-height: 25px;background: #FFFFFF;">
+		                 	余额
+		            </a>
+		            <a id="info_yue" style="float: right;line-height: 25px;">0.45</a>
+		        </li>
+		        
+		        
+		        
+		        
+		    </ul>
+		
+		
+		<ul  class="mui-table-view" style="margin-top: 10px;">
+		        <li id="getmoney" class="mui-table-view-cell">
+		            <a class="mui-navigate-right" >
+		                 提现信息
+		            </a>
+		        </li>
+		        
+		        <li id="moneydetail" class="mui-table-view-cell">
+		            <a class="mui-navigate-right" >
+		                 收益明细
+		            </a>
+		        </li>
+		    </ul>
+		
+		<ul class="mui-table-view" style="margin-top: 10px;">
+		        <li id="mynamecard" class="mui-table-view-cell">
+		            <a class="mui-navigate-right">
+		                 我的名片
+		            </a>
+		        </li>
+		    </ul>
+		
+		
+		
+		
+		
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+
+		function back(){
+			location.href="index.html"
+			}
+			mui.init({
+				beforeback: function(){
+			        //获得列表界面的webview
+			        var i = plus.webview.getWebviewById("homecontent");
+			        console.log("页面返回"+i);
+			        if(i){
+			            //触发列表界面的自定义事件（refresh）,从而进行数据刷新
+			            i.evalJS("getinfo()");
+			        }
+			        return true;
+			   },
+			swipeBack: true, //Boolean(默认false)启用右滑关闭功能
+			statusBarBackground: '#9defbcg',
+			waiting: {
+				autoShow: true, //自动显示等待框，默认为true
+				title: '正在加载...' //等待对话框上显示的提示内容
+				
+			}
+			});
+			
+			document.getElementById("userhead").src = localStorage.getItem("headimg");
+			document.getElementById("username").textContent = localStorage.getItem("username");
+			var yue = localStorage.getItem("yue");
+			var yuetext = document.getElementById("info_yue");
+			if(yue==null||yue==""||yue<0){
+				yuetext.textContent = "0元";
+			}else{
+				yuetext.textContent = yue+"元";
+			}
+			
+		
+		document.getElementById("getmoney").addEventListener("tap",function(){
+						
+						var user = JSON.parse(localStorage.getItem("user"));
+						var wechat = user.wechat;
+						var alipay = user.alipay;
+						console.log(wechat);
+						if(wechat==null||wechat==""||alipay==null||alipay==""){
+							mui.toast("您还没有提现信息哦！！！")
+							mui.openWindow({
+							url:"infoediting.html",
+							id:"infoediting",
+								
+							waiting:{
+						      autoShow:true,//自动显示等待框，默认为true
+						      title:'正在加载...',//等待对话框上显示的提示内容
+						      
+						    }
+						});
+						}else{
+							mui.openWindow({
+							url:"account.html",
+							id:"account",
+								
+							waiting:{
+						      autoShow:true,//自动显示等待框，默认为true
+						      title:'正在加载...',//等待对话框上显示的提示内容
+						      
+						    }
+						});
+						}
+						
+					});
+					
+					document.getElementById("moneydetail").addEventListener("tap",function(){
+						mui.openWindow({
+							url:"moneydetail.html",
+							id:"moneydetail",
+								
+							waiting:{
+						      autoShow:true,//自动显示等待框，默认为true
+						      title:'正在加载...',//等待对话框上显示的提示内容
+						      
+						    }
+						});
+					});
+					
+					
+					document.getElementById("mynamecard").addEventListener("tap",function(){
+						mui.openWindow({
+							url:"namecard.html",
+							id:"namecard",
+								
+							waiting:{
+						      autoShow:true,//自动显示等待框，默认为true
+						      title:'正在加载...',//等待对话框上显示的提示内容
+						      
+						    }
+						});
+					});
+		</script>
+	</body>
+
+</html>

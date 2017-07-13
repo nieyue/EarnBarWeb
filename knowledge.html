@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html >
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/knowledge.css" rel="stylesheet" />
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/spin.js" ></script>
+		<script type="text/javascript" src="js/home.js" ></script>
+		<script type="text/javascript" src="js/jquery-1.8.1.min.js" ></script>
+		
+	</head>
+
+	<body >
+		<header class="mui-bar mui-bar-nav" style="background: #b033b1;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="back()"></a>
+			<h1 class="mui-title"><font color="#FFFFFF">知识学堂</font></h1>
+		</header>
+		
+		
+		
+		<div class="mui-scroll-wrapper" style="background: #FFFFFF;margin-top: 40px;">
+		    <div id="lodingdiv" class="centerdiv" style="text-align: center;">
+    			</div>
+		    <div class="mui-scroll">
+		    	
+		        <ul class="mui-table-view" >
+					
+				</ul>
+				
+				
+		    </div>
+		    
+		    
+		</div>
+		
+		
+		
+		
+
+		<script type="text/javascript">
+		function back(){
+			//history.go(-1)
+			location.href="index.html"
+			}
+			mui.init({
+				swipeBack: true, //Boolean(默认false)启用右滑关闭功能
+				statusBarBackground: '#9defbcg',
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...' //等待对话框上显示的提示内容
+
+				},
+
+				
+
+			});
+
+			mui.plusReady(function(){
+				showloding();
+				getlist();
+			});
+			//showloding();
+				getlist();
+			
+			mui('.mui-scroll-wrapper').scroll({
+                    deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006 
+			});
+			
+			
+			function getlist(){
+				var host = localStorage.getItem("hostUrl");
+				mui.ajax(host+'/school/list',{
+				data:{
+					
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+//				headers:{'Content-Type':'application/json'},	  
+				xhrFields: {withCredentials: true},	             
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					//console.log(data.code);
+					//console.log(data.msg);
+					var result = data.list;
+					//console.log(JSON.stringify(result));
+					if(data.code==200){
+						var table = document.body.querySelector('.mui-table-view');
+
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					
+					for (var i = 0;  i < result.length; i++) {
+					
+					var li = document.createElement('div');//创建li元素
+					
+					li.className = 'liparent';
+					li.id = i;
+					li.innerHTML = '<li style="background: #b033b1;height: 45px;width: 8px;float: left;"></li><font style="margin-left: 20px;" >'+result[i].title+'</font><div id="content'+i+'" class="myli" style="display: none;padding:20px;"></div>';
+					
+					
+					//下拉刷新，新纪录插到最前面；
+					
+					var str = result[i].content.toString();
+					table.insertBefore(li, table.firstChild);//把刷新出来的元素添加到第一位
+					var doms = $.parseHTML( str , true);
+					$("#content"+i).append(doms);
+					var imgs =  document.getElementById("content"+i).getElementsByTagName("img");
+							for(var j=0;j<imgs.length;j++){
+								imgs[j].style.width = "100%";
+//								imgs[i].style.marginLeft = "100px";
+//								imgs[i].style.marginRight = "auto";
+							}
+							var ps = document.getElementById("content"+i).getElementsByTagName("p");
+							for(var k=0;k<ps.length;k++){
+								ps[k].style.width = "100%";
+								ps[k].style.wordWrap = "break-word";
+//								ps[i].style.marginLeft = "100px";
+							}
+					}
+					}else{
+						mui.toast("暂无数据");
+					}
+					
+					
+					closeloding();
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+					closeloding();
+					mui.toast("数据请求失败，请检查网络！！！");
+				}
+			});
+			}
+			
+			mui(".mui-table-view").on('tap','.liparent',function(){
+			  var id = this.getAttribute('id');  
+			  console.log("id========="+id);
+			  var content = document.getElementById("content"+id);
+			  var contentdisplay = content.style.display;
+				if(contentdisplay ==""){
+					console.log(content.style.display);
+					content.style.display="none";
+				}else if(contentdisplay =="none"){
+					console.log(content.style.display);
+					content.style.display="";
+				}
+	});
+		</script>
+	</body>
+
+</html>

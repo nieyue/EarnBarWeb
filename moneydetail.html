@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/moneydetail.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/home.js" ></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #b033b1;">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title"><font color="#FFFFFF">收益明细</font></h1>
+		</header>
+		
+		<div style="margin-top: 43px;width: 100%;">
+		
+		
+		
+		<!--下拉刷新容器-->
+		<div id="moneydetailrefresh" class="mui-content mui-scroll-wrapper" style="margin-top: 45px;">
+		  
+		  <div class="mui-scroll">
+		  	
+		  	<div style="width: 100%;height: 60px;background: #b033b1;">
+			<li  class="moneyli" style="float: left;"><font  color="#FFFFFF">文章总收益： </font></li>
+			<li class="moneyli" style="float: right;"><font color="#FFFFFF">徒弟总收益：</font></li>
+		</div>
+		<div style="width: 100%;height: 30px;background: #b033b1;">
+			<li  class="moneyli1" style="float: left;"><font color="#FFFFFF" size="5" id="wenzhangtext">元</font></li>
+			<li class="moneyli1" style="float: right;"><font color="#FFFFFF" size="5" id="tuditext">元</font></li>
+		</div>
+		    <ul id="listgroup" class="mui-table-view" style="height: auto;">
+		    	<!--<li class="mui-table-view-cell">
+		    		<a href="javascript:;">
+		    			<img class=" mui-pull-left" src="img/timg1.jpg" width="100px" height="60px" style="padding-right: 10px;">
+		    			<div class="mui-ellipsis-2" >撒立法会拉横幅骷髅了会计师的会计的阿克苏购房款桑副科...<div >
+		    				<p class="mui-ellipsis" style="float: left;margin-top: 0px;">2017-03-21</p>
+		    				<p class="mui-ellipsis" style="float: right;margin-top: 0px;">收益：<font color="#FF0000">'+shouyi.money+'</font>
+		    				</p>
+		    			</div>
+		    			</div>
+		    		</a>
+		    	</li>-->
+		    </ul>
+		</div>
+		    
+		  </div>
+		
+		
+		</div>
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				pullRefresh: {
+					container: "#moneydetailrefresh", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						contentdown : "下拉刷新",
+						contentover : "释放刷新",
+						contentrefresh : "正在刷新...",
+						callback: pullfreshfunction
+					},
+					up:{    
+			            contentrefresh:'正在加载...',
+			            contentnomore:"没有更多数据了",
+			            callback:pullupRefresh
+        }
+
+				},
+			});
+			
+			
+			
+			var wenzhang=0;
+			var page = 1;
+			var host = localStorage.getItem("hostUrl");
+			var acountid = localStorage.getItem("acountId");
+			var listgroup = document.getElementById("listgroup");
+			var partnerProfit = parseFloat(localStorage.getItem("partnerProfit"))||0;
+			var baseProfit = parseFloat(localStorage.getItem("baseProfit"));
+			var tixianbum = parseFloat(localStorage.getItem("tixiannum"));
+			var yue = parseFloat(localStorage.getItem("yue"));
+			var wenzhangnum = tixianbum+yue-partnerProfit-baseProfit||0;
+			console.log(partnerProfit+"==="+tixianbum+"===="+yue);
+			document.getElementById("tuditext").textContent =partnerProfit.toFixed(2)+"元";
+			document.getElementById("wenzhangtext").textContent = wenzhangnum.toFixed(2)+"元";
+			
+			mui.plusReady(function(){
+				showloding();
+				getwenzhanglist(page);
+			});
+			
+			function pullfreshfunction() {
+				setTimeout(function ()  {  
+					
+					page=1;
+					getwenzhanglist(page);
+					                                    
+					mui('#moneydetailrefresh').pullRefresh().endPulldownToRefresh();  //refresh completed  
+					               },  1500);
+
+			}
+			
+			function pullupRefresh() {
+				setTimeout(function ()  { 
+					
+					 
+					                                
+					getwenzhanglist(page);
+					
+
+					mui('#moneydetailrefresh').pullRefresh().endPullupToRefresh();  //refresh completed  
+					               },  1500);
+
+			}
+			
+			
+//			var wenzhangtext = document.getElementById("wenzhangtext");
+//			var tuditext = document.getElementById("tuditext");
+//			document.getElementById("wenzhangli").addEventListener("tap",function(){
+//				if(wenzhang==0){
+//					return;
+//				}else{
+//					wenzhangtext.color = "#EC971F";
+//					tuditext.color = "#000000";
+//					wenzhang = 0;
+//					page = 1;
+//					listgroup.innerHTML = "";
+//					getwenzhanglist(page);
+//				}
+//			});
+//			
+//			document.getElementById("tudili").addEventListener("tap",function(){
+//				if(wenzhang==1){
+//					return;
+//				}else{
+//					tuditext.color = "#EC971F";
+//					wenzhangtext.color = "#000000";
+//					wenzhang = 1;
+//					page = 1;
+//					listgroup.innerHTML = "";
+//					gettudilist(page);
+//				}
+//			});
+			
+			
+			
+		 	function getwenzhanglist(pagenum){
+				mui.ajax(host+'/profit/listProfitByAcountId',{
+				data:{
+					acountId:acountid,
+					pageNum:(pagenum-1)*10+1,
+					pageSize:10
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+//				headers:{'Content-Type':'application/json'},	
+				xhrFields: {withCredentials: true},	               
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(data.code);
+					console.log(data.msg);
+					if(data.code==200){
+						var result = data.list;
+					console.log(result)
+					console.log(JSON.stringify(result));
+					
+					var table = document.body.querySelector('.mui-table-view');
+
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					
+					for (var i = 0; i < result.length; i++) {
+					var shouyi = result[i].profit;
+					var wenzhang = result[i].article;
+					var title = wenzhang.title;
+					var top = 0;
+						if(title.length<16){
+							top = 20;
+						}
+					
+					var time = shouyi.createDate.substring(0,10);
+					var li = document.createElement('li');//创建li元素
+					li.className = 'mui-table-view-cell';
+					li.id = i;
+					li.innerHTML = '<a href="javascript:;"><img class=" mui-pull-left" src="'+wenzhang.imgList[0].imgAddress+'" width="100px" height="60px" style="padding-right: 10px;"><div ><font class="mui-ellipsis-2">'+title+'</font> <div ><p class="mui-ellipsis" style="float: left;margin-top: '+top+'px;">'+time+'</p><p class="mui-ellipsis" style="float: right;margin-top: '+top+'px;">收益：<font color="#FF0000">'+shouyi.money+'</font></p></div></div></a>';
+					
+					//下拉刷新，新纪录插到最前面；
+					
+					table.insertBefore(li, table.firstChild);//把刷新出来的元素添加到第一位
+					
+					}
+					
+					page++;
+					}else{
+						mui.toast("暂无更多数据！");
+					}
+					
+					closeloding();
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+					closeloding();
+					mui.toast("数据请求失败，请检查网络！！！");
+				}
+			});
+			}
+		 	
+		 	
+//		 	function gettudilist(pageNum){
+//		 		mui.ajax(host+'/acount/list',{
+//				data:{
+//					masterId:acountId,
+//					pageNum:pageNum,
+//					pageSize:10
+//				},
+//				dataType:'json',//服务器返回json格式数据
+//				type:'get',//HTTP请求类型
+//				timeout:10000,//超时时间设置为10秒；
+////				headers:{'Content-Type':'application/json'},	              
+//				success:function(data){
+//					//服务器返回响应，根据响应结果，分析是否登录成功；
+//					console.log(data.code);
+//					console.log(data.msg);
+//					var result = data.list[0];
+//					console.log(JSON.stringify(result));
+//					
+//				},
+//				error:function(xhr,type,errorThrown){
+//					//异常处理；
+//					console.log(type);
+//					mui.toast("数据请求失败，请检查网络！！！");
+//				}
+//			});
+//		 	}
+		</script>
+	</body>
+
+</html>

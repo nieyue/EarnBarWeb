@@ -1,0 +1,687 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-1.8.1.min.js" ></script>
+		<link href="css/home.css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="js/home.js" ></script>
+		<style>
+	
+		@media (min-width:400px){
+		.mui-col-sm-3{
+
+			width:33.333333% ;
+		}
+
+		}
+		</style>
+	</head>
+
+	<body>
+		
+		
+		
+
+		
+		
+		<div id="homerefresh" class="mui-content mui-scroll-wrapper" >
+			<div class="mui-scroll" style="height: 100%;  background: #ededed;">
+
+				<div class="div1" style="height:180px;background-image: url(img/timg.jpg); ">
+					<div >
+					<img id="headimg" src="img/touxiang.jpg" style="width: 80px; height: 80px; border-radius: 80px;" />
+					<li id="username" style="color: #FFFFFF;margin-top: 10px;">赚吧</li>
+					</div>
+					<!--<div style="float: right;width: 50%;height: 158px;text-align: center;">
+					<li id="username" style="color: #FFFFFF;margin-top: 10px;margin-left: 60px;font-size: 18px;margin-top: 40px;">余额：</li>
+					<li id="yue" style="color: #FFFFFF;margin-top: 10px;margin-left: 60px;font-size: 25px;">0</li>
+					</div>-->
+					<div class="div2">
+						<div class="div3" style=" margin-left: 20px;float: left;background-color: rgba(255,255,255,0.4);">
+							<li id="todaymoney" style="color: #FFFFFF;margin-top: 13px;font-size: 14px;">今日收益:0元</li>
+						</div>
+
+						<div class="div3" style=" margin-right: 20px;float: right;background-color: rgba(255,255,255,0.4);">
+							
+							<li id="tixiannum" style="color: #FFFFFF;margin-top: 13px;font-size: 14px;">余额:0元</li>
+						</div>
+					</div>
+				</div>
+
+				<div style="width: 100%; height: 40px; background: #ededed;margin-top: 2px;">
+				
+						<li id="knowledgebtn" class="homeli" style="border-right: 1px solid #ededed;">知识学堂</li>
+
+						<li id="rankingbtn" class="homeli" style="border-left: 1px solid #ededed;">排行榜</li>
+				</div>
+				
+				
+				
+				
+				<!--9999999999-->
+				
+				<ul class="mui-table-view mui-grid-view mui-grid-9" style="margin-top: 7px;">
+				<li id="wenzhang" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="background: #FFFFFF;">
+				    <a >
+				        <img src="img/wenz.png" style="width: 35px;height: 35px;"/>
+				        <div class="mui-media-body">文章</div>
+				    </a>
+				</li>
+				<li id="partnerbtn" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="background: #FFFFFF;">
+				    <a >
+				        <img src="img/patner.png" style="width: 35px;height: 35px;"/>
+				        <div class="mui-media-body">合伙人</div>
+				    </a>
+				</li>
+				<li  id="userinfo" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="background: #FFFFFF;">
+				    <a >
+				        <img src="img/userinfo.png" style="width: 35px;height: 35px;"/>
+				        <div class="mui-media-body">个人信息</div>
+				    </a>
+				</li>
+				<li id="feedbackbtn" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="background: #FFFFFF;">
+				    <a >
+				        <img src="img/feedback.png" style="width: 35px;height: 35px;"/>
+				        <div class="mui-media-body">意见反馈</div>
+				    </a>
+				</li>
+				<li id="duihuan" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="background: #FFFFFF;">
+				    <a >
+				        <img src="img/duihuan.png" style="width: 35px;height: 35px;"/>
+				        <div class="mui-media-body">兑换</div>
+				    </a>
+				</li>
+				<!-- <li id="callus" style="visibility: hidden;" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="background: #FFFFFF;">
+				    <a href="#">
+				        <span class="mui-icon mui-icon-phone"></span>
+				        <img src="img/bussnes.png" style="width: 35px;height: 35px;"/>
+				        <div class="mui-media-body">转赚交流群</div>
+				    </a>
+				</li> -->
+				
+				<li style="" id="callus" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="background: #FFFFFF;">
+				    <a href="#">
+				        <div class="mui-media-body">赚吧交流群</div>
+				        <div class="mui-media-body">338977715</div>
+				    </a>
+				</li>
+				    </ul>
+				
+				
+				
+				
+					<div class="centerdiv" id="homebeijing">	
+					</div>
+				<div class="centerdiv1" id="homegonggao">
+					<div class="gonggaodiv">
+						<p  style="line-height: 50px;color: #FFFFFF;font-size: 18px;" id="gonggaotitle">公  告</p>
+					</div>
+					<div class="mui-scroll-wrapper" style="height: 300px;width: 100%;background: #F7F7F7;padding-left: 5px;padding-right: 5px;margin-top: 50px;">
+					    <div class="mui-scroll" id="gonggaocontent" style="margin-top: 10px;">
+					        
+					    </div>
+					    
+					    <div  style="position:absolute;left:0;bottom: 0;width: 100%;height: 50px;text-align: center;background: #FFFFFF;"  >
+						<button id="homeok" style="margin-top: 8px; color:#b033b1;border:1px solid #b033b1;" type="button" class="mui-btn mui-btn-yellow mui-btn-outlined">OK</button>
+							</div>
+					    </div>
+					
+					
+					
+				</div>
+				
+				<!--<div id="lodingdiv" class="centerdiv" style="text-align: center;">
+    			</div>-->
+				
+			</div>
+			
+			
+		</div>
+
+		
+		
+		<!-- 代码 结束 -->
+		<script type="text/javascript"  charset="utf-8">
+		var host;
+			//localStorage.setItem("hostUrl","http://zhuanba.jiehao9.com");			
+			localStorage.setItem("hostUrl","http://192.168.7.111");	
+			host =  localStorage.getItem("hostUrl");
+			localStorage.setItem("headimg","img/touxiang.jpg");
+		if(localStorage.getItem("acountId")){
+			function runloginInterval(){
+				mui.ajax(localStorage.getItem("hostUrl")+"/acount/"+localStorage.getItem("acountId")+"?d="+new Date().getTime(),{
+				data:{
+					
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				xhrFields: {withCredentials: true},	 
+				//headers:{'Content-Type':'application/json'},	              
+				success:function(data){
+					console.log(data)
+					console.log(data.code==70000)
+					if(data.code==70000){
+						mui.toast("请登录");
+						localStorage.removeItem("user");
+						localStorage.removeItem("acountId");
+						localStorage.removeItem("username");
+						localStorage.removeItem("headimg");
+					clearInterval(nologinInterval);
+					location.replace("login.html");
+						return;
+					}
+					if(data.code==200 && data.list[0].status==1){
+				mui.confirm("您的账号已被锁定，已被禁止登陆，如有疑问，请及时联系客服",['取消','确定'],function(e){
+				if(e.index==0||e.index==1){
+
+					localStorage.removeItem("user");
+						localStorage.removeItem("acountId");
+						localStorage.removeItem("username");
+						localStorage.removeItem("headimg");
+					clearInterval(nologinInterval);
+					location.replace("homecontent.html");
+				}
+				},"div");
+					}
+				},
+				error:function(xhr,type,error){
+					console.log(type)
+					//异常处理；
+					closeloding();
+				}
+			});
+			}
+			runloginInterval();//立即执行
+			var nologinInterval=setInterval(runloginInterval,60000);
+		}
+		
+			mui.init({
+			
+				pullRefresh: {
+					container: "#homerefresh", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						callback: pullfreshfunction
+					}
+
+				}
+
+			});
+			
+		
+			
+			getinfo();
+			mui.plusReady(function(){
+				plus.screen.lockOrientation("portrait-primary");
+				showloding("正在加载");
+				getgonggao();
+				getuserinfo();
+				getvision();
+			});
+			
+				//showloding("正在加载");
+				getgonggao();
+				getuserinfo();
+				//getvision();
+
+			function pullfreshfunction() {
+				setTimeout(function ()  {  
+					       getinfo();                            
+					mui('#homerefresh').pullRefresh().endPulldownToRefresh();  //refresh completed  
+					               },  1500);
+
+			}
+			document.getElementById("wenzhang").addEventListener("tap",function(){
+//				gologin("article");
+				mui.openWindow({
+					url:"articlelist.html",
+					id:"article",
+						
+					waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+				      
+				    }
+				});
+			});
+			document.getElementById("userinfo").addEventListener("tap",function(){
+				gologin("userinfo");
+				
+			});
+			
+			document.getElementById("knowledgebtn").addEventListener("tap",function(){
+				
+				mui.openWindow({
+					url:"knowledge.html",
+					id:"knowledge",
+						
+					waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+				      
+				    }
+				});
+			});
+			
+			
+			document.getElementById("callus").addEventListener('tap',function(){
+
+// 				location.href="tencent://message/?uin=338977715&Site=ssd&Menu=yes";
+ return;
+
+			if (plus.os.name == "Android") { 
+            var main = plus.android.runtimeMainActivity(); 
+            var Intent = plus.android.importClass('android.content.Intent'); 
+            var Uri = plus.android.importClass('android.net.Uri'); 
+//mqqwpa://im/chat?chat_type=group&uin=338977715
+																	
+            var intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Da_5_TtKvKNmkRuqoMtV3J1MPKdOtcq-m"));
+            main.startActivity(intent);
+			}else if(plus.os.name == "iOS"){
+				plus.runtime.launchApplication({  
+					
+                           action: "mqqapi://card/show_pslcard?src_type=internal&version=1&uin=338977715&key=df4bdb31b1e0b9f16f948d74b3210e6e606e9c60bb6c345cbe565a570f53abed&card_type=group&source=external"  
+                       }, function(e) {  
+                           plus.nativeUI.confirm("检查到您未安装qq，请先到appstore搜索下载？", function(i) {  
+                               if (i.index == 0) {  
+                                   iosAppstore("itunes.apple.com/cn/app/mqq/");  
+                               }  
+                           });  
+                       });
+			}
+        });
+
+
+		document.getElementById("duihuan").addEventListener("tap",function(){
+						gologin("exchange");
+					});
+		
+		document.getElementById("feedbackbtn").addEventListener("tap",function(){
+				gologin("feedback");
+				
+			});
+		
+		document.getElementById("partnerbtn").addEventListener("tap",function(){
+				gologin("partner");
+//				goqqbrowser();
+			});
+			
+			document.getElementById("rankingbtn").addEventListener("tap",function(){
+				gologin("ranking");
+				
+			});
+			
+			function getinfo(){
+				var head = document.getElementById("headimg");
+				var name = document.getElementById("username");
+				var headimg = localStorage.getItem("headimg");
+				var username = localStorage.getItem("username");
+				console.log("登录返回信息"+headimg);
+				if(headimg==null||username==null){
+					head.src = "img/touxiang.jpg";
+					name.textContent = "请点击头像登录";
+					head.addEventListener("tap",function(){
+						mui.openWindow({
+					url:"login.html",
+					id:"login",
+					
+				});
+					});
+				}else{
+					head.addEventListener("tap",null);
+					head.src = headimg;
+					name.textContent = username;
+					getuserinfo();
+					getusermoney();
+				}
+			}
+			
+			function gologin(url){
+				var headimg = localStorage.getItem("headimg");
+				var username = localStorage.getItem("username");
+			/*	if(headimg==null||username==null){
+					mui.openWindow({
+					url:"login.html",
+					id:"login",
+					
+				});
+				
+				}else*/{
+					mui.openWindow({
+					url:url+".html",
+					id:url,
+						
+					waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+				      
+				    }
+				});
+				}
+				
+			}
+			
+			document.getElementById("homeok").addEventListener("tap",function(){
+						var homebeijing = document.getElementById("homebeijing");
+						var homegonggao = document.getElementById("homegonggao");
+						homebeijing.style.display = "none";
+						homegonggao.style.display = "none";
+					});
+			
+			
+
+			
+			
+		
+		
+		
+		
+		
+		function getgonggao(){
+			console.log("获取公告信息");
+			console.log("域名=="+host);
+			$.ajax(host+'/notice/list',{
+				data:{
+					pageSize:1
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+//				headers:{'Content-Type':'application/json'},	      
+				xhrFields: {withCredentials: true},	         
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(data.code);
+					console.log(data.msg);
+					var gonggao = data.list[0];
+					if(data.code==200){
+						console.log(gonggao.title+",,,"+gonggao.content);
+						$("#gonggaotitle").text(gonggao.title);
+						localStorage.setItem("gonggaotitle",gonggao.title);
+						localStorage.setItem("gonggaocontent",gonggao.content);
+						var html = '<font color="#b033b1" style="word-wrap:break-word; margin-top: 10px;">'+gonggao.content+'</font>';
+						var doms = $.parseHTML( html , true);
+						$("#gonggaocontent").append(doms);
+					}else{
+						$("#gonggaotitle").text(localStorage.getItem("gonggaotitle"));
+						var localcontent = localStorage.getItem("gonggaocontent");
+						var html = '<font color="#EC971F" style="word-wrap:break-word; margin-top: 10px;">'+localcontent+'</font>';
+						var doms = $.parseHTML( html , true);
+						$("#gonggaocontent").append(doms);
+					}
+					
+					
+					
+					closeloding();
+
+					
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+					$("#gonggaotitle").text(localStorage.getItem("gonggaotitle"));
+						var localcontent = localStorage.getItem("gonggaocontent");
+						var html = '<font color="#b033b1" style="word-wrap:break-word; margin-top: 10px;">'+localcontent+'</font>';
+						var doms = $.parseHTML( html , true);
+						$("#gonggaocontent").append(doms);
+					closeloding();
+					mui.toast("数据请求失败，请检查网络！！！");
+				}
+			});
+			
+
+		}
+		
+		function getusermoney(){
+			console.log("获取公告信息");
+			console.log(localStorage.getItem("user"));
+			var acountid = localStorage.getItem("acountId");
+			console.log("域名=="+host+"acountid"+acountid);
+			mui.ajax(host+'/finance/today',{
+				data:{
+					acountId:acountid
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+//				headers:{'Content-Type':'application/json'},	  
+				xhrFields: {withCredentials: true},	             
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(data.code);
+					var code = data.code;
+					console.log(data.msg);
+					if(code==200){
+						var result = data.list[0];
+					console.log(JSON.stringify(result));
+					var todaymoney = document.getElementById("todaymoney");
+//					var yue = document.getElementById("yue");
+					var tixiannum = document.getElementById("tixiannum");
+					var touday = result.todayProfit;
+					todaymoney.textContent ="今日收益: " +touday.toFixed(2)+"元";
+//					yue.textContent = result.money;
+					tixiannum.textContent ="余额: " + result.money.toFixed(2)+"元";
+					
+					localStorage.setItem("yue",result.money);
+					localStorage.setItem("tixiannum",result.withdrawals);
+					localStorage.setItem("financeId",result.financeId);
+					localStorage.setItem("usermoneyrank",result.profitMoneyOrderNum);
+					localStorage.setItem("usershoudurank",result.apprenticeOrderNum);
+					localStorage.setItem("apprenticeNum",result.apprenticeNum);
+					localStorage.setItem("partnerProfit",result.partnerProfit);
+					localStorage.setItem("baseProfit",result.baseProfit);//基准收益
+					}else{
+						localStorage.setItem("yue",0);
+						localStorage.setItem("tixiannum",0);
+					}
+					
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+					localStorage.setItem("yue",0);
+					localStorage.setItem("tixiannum",0);
+					mui.toast("数据请求失败，请检查网络！！！");
+				}
+			});
+		}
+		
+		
+		
+		function getuserinfo(){
+			console.log("获取公告信息");
+			console.log(localStorage.getItem("user"));
+			var acountid = localStorage.getItem("acountId");
+			console.log("获取用户信息"+host+"acountid"+acountid);
+			mui.ajax(host+'/acount/'+acountid,{
+				data:{
+					
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+//				headers:{'Content-Type':'application/json'},	  
+				xhrFields: {withCredentials: true},	             
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(data.code);
+					var code = data.code;
+					console.log(data.msg);
+					if(code==200){
+						var user = data.list[0];
+						localStorage.setItem("user",JSON.stringify(user));
+					console.log(user.nickname);
+					
+					}
+					
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+					
+					mui.toast("数据请求失败，请检查网络！！！");
+				}
+			});
+		}
+
+
+
+
+//休眠方法
+var ver;
+function sleep(numberMillis) {
+    var now = new Date();
+    var exitTime = now.getTime() + numberMillis;
+    while (true) {
+        now = new Date();
+        if (now.getTime() > exitTime)
+            return;
+    }
+}
+
+			
+
+
+			function getvision(){
+				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+			            ver = inf.version;
+			            console.log(ver);
+			 
+			            var uploadurl= host+'/appVersion/list';
+			            var client;
+			            var ua = navigator.userAgent.toLowerCase();
+			            if(/iphone|ipad|ipod/.test(ua)) {    //苹果手机            
+			                $.ajax({
+			                    type:"get",
+			                    dataType:'json',
+			                    url:"https://itunes.apple.com/lookup?id=1247343014",//获取当前上架APPStore版本信息
+			                    data:{            
+			                        id:1247343014 //APP唯一标识ID
+			                    },
+			                    contentType:'application/x-www-form-urlencoded;charset=UTF-8',
+			                    				xhrFields: {withCredentials: true},	 
+			                    success:function(data){
+			                        console.log("jsjsjsjs====="+JSON.stringify(data));
+			                        $.each(data, function(i,norms) {
+			                            $.each(norms, function(key,value) {
+			                                $.each(value, function(j, normItem) {
+			                                    if(j=="version"){
+			                                        if(normItem>ver){                        
+			                                             alert("发现新版本:V"+normItem);
+			                                               document.location.href='http://itunes.apple.com/app/id1247343014'; //上新APPStore下载地址
+			                                        }
+			                                    }                            
+			                                });                
+			                            });
+			                        });        
+			                        return ;
+			                    }
+			                });    
+			            }else if(/android/.test(ua)) { 
+			                mui.ajax(uploadurl,{
+			                data:{
+			                    pageSize:1
+			                },
+			                dataType:'json',
+			                type:'get',
+			                timeout:10000,
+			                success:function(data){  
+			                    	if(data.code==200){
+			                    		
+			                    	var res = data.list[0];
+			                        console.log("发现新版本:V"+JSON.stringify(res));//获取远程数据库中上新andriod版本号                       
+			                        
+			                        if(compareVersion(ver,res.name)){
+			                        	
+			                        	var btnArray = ['立即更新', '不更新'];
+			                        	mui.confirm('检测到最新版本：V' + res.name+',   更新内容：'+res.content, '发现新版本', btnArray, function(z) {
+				                            if (z.index == 0) {
+				                            	
+				                                var dtask = plus.downloader.createDownload(res.link, {}, function(d, status) {
+					                            
+					                            if (status == 200) {
+					                            	
+					                                plus.nativeUI.toast("正在准备环境，请稍后！");
+					                                localStorage.removeItem("headimg");
+					                                localStorage.removeItem("username");
+					                                getinfo();
+					                                sleep(1000);
+					                                var path = d.filename;//下载apk
+					                                plus.runtime.install(path);// 自动安装apk文件
+					                            }else {
+					                                alert('版本更新失败: ' + status);
+					                            }
+					                            
+					                            closeloding();
+					                            clearInterval(i);
+					                        }); 
+				                               dtask.start(); 
+				                               xshowloding("正在升级APP");
+				                               var i = setInterval(function() {
+			                                    var totalSize = dtask.totalSize;
+			                                    var downloadedSize = dtask.downloadedSize;
+			                                    var baifenbi = parseInt((downloadedSize/totalSize)*100);
+			                                    
+			                                    
+			                                }, 100);
+				                            } else {
+				                            	
+				                                console.log('已取消更新');
+				                                return;
+				                            }
+				                        });
+			                        	console.log("有最新版本");
+			                       
+			                        }else{
+			                        	console.log("已是最新版本");
+			                        }
+			                    }
+			                },
+			                error: function(xhr, type, errerThrown) {
+			                    mui.toast('版本检测失败');
+			                }
+			            });
+			        }
+			    });
+			}
+			
+			/**
+		     * 比较版本大小，如果新版本nv大于旧版本ov则返回true，否则返回false
+		     * @param {String} ov
+		     * @param {String} nv
+		     * @return {Boolean}
+		     */
+			function compareVersion(ov, nv) {
+		        if (!ov || !nv || ov == "" || nv == "") {
+		            return false;
+		        }
+		        var b = false,
+		            ova = ov.split(".", 4),
+		            nva = nv.split(".", 4);
+		        for (var i = 0; i < ova.length && i < nva.length; i++) {
+		            var so = ova[i],
+		                no = parseInt(so),
+		                sn = nva[i],
+		                nn = parseInt(sn);
+		            if (nn > no || sn.length > so.length) {
+		                return true;
+		            } else if (nn < no) {
+		                return false;
+		            }
+		        }
+		        if (nva.length > ova.length && 0 == nv.indexOf(ov)) {
+		            return true;
+		        }
+    }
+		</script>
+		
+		
+	</body>
+
+</html>

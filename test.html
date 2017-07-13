@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+
+		<link href="css/demo.css" rel="stylesheet" />
+		<link href="css/loaders.css" rel="stylesheet" />
+		<script src="js/mui.min.js"></script>
+	 	<script type="text/javascript" src="js/jquery-1.8.1.min.js" ></script>
+	
+		<script type="text/javascript" src="js/jquery.qrcode.min.js" ></script>
+
+	</head>
+
+	<body>
+		<li> sdlahflsdkhfl</li>
+		<div id="qrcode" style="width: 100px;height: 100px;"></div>
+
+		
+		<script type="text/javascript">
+			mui.init();
+			
+			jQuery('#qrcode').qrcode({
+			    render: "canvas", //也可以替换为table
+			    width: 100,
+			    height: 100,
+			    text: "http://www.baidu.com"
+			});
+			var n=1111;
+				var t = '<a href="javascript:location.href=\'detail.html?acountId='+n+'\'";"><img class=" mui-pull-left" src="'+1+'" width="100px" height="60px" style="padding-right: 10px;"><div ><font class="mui-ellipsis-2">' + 1 + '</font><div style="margin-top: '+1+'px;"><p  style="float: left;">¥ <font color="#FF0000">'+1+'</font></p><p  style="float: right;">阅读量：'+1+'</p></div></div></a>';
+	
+		console.log(t)
+
+		$("body").append(t)
+
+ 		$.ajax({url:"http://192.168.5.111/getSession2",
+xhrFields: {withCredentials: true},
+ 			success:function(d){
+ console.log(d)
+
+ 		}});
+// var token;
+// if(sessionStorage.getItem("token")){
+// token=sessionStorage.getItem("token");
+// }
+// $.ajax({url:"http://192.168.5.111/getSession1",data:{token:token,t:2323},success:function(d){
+// console.log(d)
+//  if(!sessionStorage.getItem("token")){
+//  sessionStorage.setItem("token",JSON.stringify(d));
+//  }
+
+// 		}});
+
+function myAjax(params){
+mui.ajax({
+url:params.url||"",
+xhrFields: params.xhrFields||{withCredentials: true},
+data:params.data||{},
+});
+}
+</script>
+		</script>
+		<script>var advertise_space_id=1013</script>
+<script src='http://advertiseserver.yayao8.com/resources/js/advertisespace.js'></script>
+	</body>
+
+</html>

@@ -1,0 +1,275 @@
+{
+	"index.html": {
+		"resources": [
+			"css/first.css",
+			"img/touxiang.jpg",
+			"js/mui.min.js",
+			"img/timg.jpg",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"homecontent.html"
+		],
+		"refer": [
+			"mine.html",
+			"homecontent.html"
+		]
+	},
+	"mine.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"homecontent.html": {
+		"resources": [
+			"img/touxiang.jpg",
+			"img/timg.jpg",
+			"fonts/mui.ttf",
+			"css/first.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"css/home.css",
+			"userinfo.html",
+			"partner.html",
+			"article.html",
+			"css/loaders.css",
+			"css/demo.css",
+			"js/spin.js",
+			"js/jquery-1.8.1.min.js",
+			"img/timg1.jpg",
+			"img/userinfo.png",
+			"img/wenz.png",
+			"img/duihuan.png",
+			"img/patner.png",
+			"img/feedback.png",
+			"img/bussnes.png",
+			"js/home.js"
+		],
+		"refer": [
+			"mine.html",
+			"knowledge.html",
+			"article.html",
+			"exchange.html",
+			"feedback.html",
+			"login.html",
+			"userinfo.html",
+			"partner.html",
+			"ranking.html",
+			"test.html"
+		]
+	},
+	"knowledge.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/knowledge.css",
+			"js/jquery-1.8.1.min.js",
+			"js/home.js",
+			"js/spin.js"
+		],
+		"refer": []
+	},
+	"article.html": {
+		"resources": [
+			"articlecontent.html",
+			"css/article.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"articlecontent.html"
+		]
+	},
+	"articlecontent.html": {
+		"resources": [
+			"js/mui.min.js",
+			"img/timg.jpg",
+			"css/mui.min.css",
+			"img/timg1.jpg",
+			"fonts/mui.ttf",
+			"js/jquery-1.8.1.min.js",
+			"css/home.css",
+			"js/jquery.spin.js",
+			"js/spin.js",
+			"js/home.js",
+			"css/article.css",
+			"img/icona.png"
+		],
+		"refer": [
+			"detail.html"
+		]
+	},
+	"exchangecontent.html": {
+		"resources": [
+			"css/exchange.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/jquery-1.8.1.min.js",
+			"js/spin.min.js",
+			"js/home.js"
+		],
+		"refer": [
+			"infoediting.html"
+		]
+	},
+	"exchange.html": {
+		"resources": [
+			"exchangecontent.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"exchangecontent.html"
+		]
+	},
+	"feedback.html": {
+		"resources": [
+			"css/feedback.css",
+			"js/feedback.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/home.css",
+			"js/jquery-1.8.1.min.js",
+			"js/spin.min.js",
+			"js/home.js"
+		],
+		"refer": []
+	},
+	"login.html": {
+		"resources": [
+			"css/mui.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/jquery-1.8.1.min.js",
+			"img/720x1242.png",
+			"js/spin.min.js",
+			"css/home.css",
+			"js/home.js"
+		],
+		"refer": []
+	},
+	"userinfo.html": {
+		"resources": [
+			"img/timg1.jpg",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"account.html",
+			"moneydetail.html",
+			"infoediting.html",
+			"namecard.html"
+		]
+	},
+	"ranking.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"rankingcontent.html"
+		],
+		"refer": [
+			"rankingcontent.html"
+		]
+	},
+	"test.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"css/test.css",
+			"css/loaders.css",
+			"css/demo.css"
+		],
+		"refer": []
+	},
+	"detail.html": {
+		"resources": [
+			"css/detail.css",
+			"fonts/mui.ttf",
+			"js/jquery-1.8.1.min.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/home.js",
+			"js/spin.js"
+		],
+		"refer": []
+	},
+	"account.html": {
+		"refer": [
+			"infoediting.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"infoediting.html": {
+		"resources": [
+			"css/infoediting.css",
+			"js/jquery-1.8.1.min.js",
+			"js/spin.min.js",
+			"js/home.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"partner.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"img/timg.jpg",
+			"css/partner.css",
+			"js/home.js"
+		],
+		"refer": [
+			"namecard.html"
+		]
+	},
+	"moneydetail.html": {
+		"resources": [
+			"css/moneydetail.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/home.js",
+			"img/timg1.jpg"
+		],
+		"refer": []
+	},
+	"rankingcontent.html": {
+		"resources": [
+			"css/ranking.css",
+			"js/mui.min.js",
+			"img/touxiang.jpg",
+			"img/timg.jpg",
+			"css/mui.min.css",
+			"img/timg1.jpg",
+			"fonts/mui.ttf",
+			"js/spin.min.js",
+			"js/jquery-1.8.1.min.js",
+			"js/home.js"
+		],
+		"refer": []
+	},
+	"namecard.html": {
+		"resources": [
+			"img/namecard1.png",
+			"css/detail.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	}
+}
