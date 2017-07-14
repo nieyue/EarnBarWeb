@@ -29,14 +29,14 @@
 			
 			</div>
 			
-			<div class="inputdiv">
-
+			<!-- <div class="inputdiv">
+			
 			<div class="mui-input-row">
 			    
 			    <input id="phonenum" style="border: 0px;" type="text" class="mui-input-clear" placeholder="请输入与微信账号绑定的手机号">
 			</div>
 			
-			</div>
+			</div> -->
 			
 			<div class="inputdiv">
 
@@ -73,12 +73,12 @@
 			
 			function postuser(){
 				var weixinnum = document.getElementById("weixinnum").value;
-				var phonenum = document.getElementById("phonenum").value;
+				//var phonenum = document.getElementById("phonenum").value;
 				var username = document.getElementById("realname").value;
 				var myalipay = document.getElementById("alipay").value;
-				if(weixinnum!=""&&phonenum!=""&&username!=""&&myalipay!=""){
+				if(weixinnum!=""&&username!=""&&myalipay!=""){
 					user.wechat = weixinnum;
-					user.phone = phonenum;
+					//user.phone = phonenum;
 					user.realname = username;
 					user.alipay = myalipay;
 					showloding("正在提交信息");
@@ -93,13 +93,18 @@
 				var host = localStorage.getItem("hostUrl");
 				
 				var mastid = user.masterId;
-				if(mastid==null){
+				/*if(mastid==null){
 					user.masterId = 0;
-				}
+				}*/
 				console.log("提交信息"+JSON.stringify(user));
 				//return;
-				mui.ajax(host+'/acount/updatePhone',{
-				data:user,
+				mui.ajax(host+'/acount/updateAcount',{
+				data:{
+					acountId:user.acountId,
+					wechat:user.wechat,
+					realname:user.realname,
+					alipay:user.alipay
+				},
 				dataType:'json',//服务器返回json格式数据
 				type:'post',//HTTP请求类型
 				timeout:10000,//超时时间设置为10秒；

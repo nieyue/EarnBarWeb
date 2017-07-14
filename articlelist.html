@@ -109,7 +109,7 @@
 		      //      mainPage = plus.webview.getWebviewById('A.html');
 		      //      mainPage = plus.webview.getWebviewById("articlecontent");
 				sessionStorage.setItem("articleType",value);//点击的类型			
-			document.getElementById('articlecontent').setAttribute("src",document.getElementById('articlecontent').getAttribute("src")+"?d="+new Date());
+			document.getElementById('articlecontent').setAttribute("src",document.getElementById('articlecontent').getAttribute("src"));
 		        }
 				mui.fire(mainPage,"choseClick",{
 		            "chose":value

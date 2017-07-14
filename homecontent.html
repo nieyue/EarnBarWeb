@@ -182,9 +182,9 @@
 				if(e.index==0||e.index==1){
 
 					localStorage.removeItem("user");
-						localStorage.removeItem("acountId");
-						localStorage.removeItem("username");
-						localStorage.removeItem("headimg");
+					localStorage.removeItem("acountId");
+					localStorage.removeItem("username");
+					localStorage.removeItem("headimg");
 					clearInterval(nologinInterval);
 					location.replace("homecontent.html");
 				}
@@ -193,6 +193,12 @@
 				},
 				error:function(xhr,type,error){
 					console.log(type)
+					localStorage.removeItem("user");
+					localStorage.removeItem("acountId");
+					localStorage.removeItem("username");
+					localStorage.removeItem("headimg");
+					clearInterval(nologinInterval);
+					location.replace("homecontent.html");
 					//异常处理；
 					closeloding();
 				}
